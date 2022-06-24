@@ -1,40 +1,58 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import './Styles/App.css'
-import PostItem from "./Components/PostItem";
 import PostList from "./Components/PostList";
-import MyButton from "./Components/UI/button/MyButton";
+import PostForm from "./Components/PostForm";
+import MySelect from "./Components/UI/select/MySelect";
 import MyInput from "./Components/UI/input/MyInput";
+import PostFilter from "./Components/PostFilter";
 
 function App() {
-    const [posts,setPosts]=useState([
-        {id:1, title:"text title", body:"more texts"},
-        {id:2, title:"text title", body:"more texts"},
-        {id:3, title:"text title", body:"more texts"},
-        {id:4, title:"text title", body:"more texts"},
-        {id:5, title:"text title", body:"more texts"},
-        {id:6, title:"text title", body:"more texts"},
-        {id:7, title:"text title", body:"more texts"}
+    const [posts, setPosts] = useState([
+        {id: 1, title: "aaa title", body: "cccc texts"},
+        {id: 2, title: "bbb title", body: "asda texts"},
+        {id: 3, title: "ccc title", body: "mosssre texts"},
+        {id: 4, title: "tdddext title", body: "awdawd texts"},
+        {id: 5, title: "rrrr title", body: "cccc texts"},
+        {id: 6, title: "teqqxt title", body: "qwert texts"},
+        {id: 7, title: "tertttxt title", body: "madvawgaore texts"}
     ]);
+    const [filter,setFilter]=useState({sort:'',query:''})
+    const sortedPost=useMemo(()=>{
+        console.log('!!!!')
+        if(filter.sort)
+            return [...posts].sort((a,b)=>a[filter.sort].localeCompare(b[filter.sort]))
+        else
+            return posts
+    },[filter.sort,posts])
 
-    const [posts2,setPosts2]=useState([
-        {id:1, title:"text title111", body:"more texts"},
-        {id:2, title:"text title111", body:"more texts"},
-        {id:3, title:"text title111", body:"more texts"},
-        {id:4, title:"text title111", body:"more texts"},
-        {id:5, title:"text title111", body:"more texts"},
-        {id:6, title:"text title111", body:"more texts"},
-        {id:7, title:"text title111", body:"more texts"}
-    ]);
+    const sortedAndSearchedPosts = useMemo(()=>{
+        return sortedPost.filter(post=>post.title.toLowerCase().includes(filter.query.toLowerCase()))
+    },[filter.query,sortedPost])
+
+
+    const createPost = (newPost) => {
+        setPosts([...posts, newPost])
+    }
+
+    const removePost = (post) => {
+        setPosts(posts.filter(p => p.id !== post.id))
+    }
 
     return (
         <div className="App">
-            <form>
-                <MyInput type="text" placeholder="title"/>
-                <MyInput type="text" placeholder="description"/>
-                <MyButton>Create post</MyButton>
-            </form>
-        <PostList posts={posts} title={"List 1"}/>
-            <PostList posts={posts2} title={"List 2"}/>
+            <PostForm create={createPost}/>
+            <hr style={{marginTop:15,marginBottom:15}}/>
+            <PostFilter
+                filter={filter}
+                setFilter={setFilter}
+            />
+            {sortedAndSearchedPosts.length !== 0
+                ?
+                <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"List 1"}/>
+                :
+                <h1 style={{textAlign: "center"}}>Posts doesn't exist</h1>
+            }
+
         </div>
     );
 }
