@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import './Styles/App.css'
 import PostList from "./Components/PostList";
 import PostForm from "./Components/PostForm";
@@ -6,6 +6,7 @@ import PostFilter from "./Components/PostFilter";
 import MyModal from "./Components/UI/MyModal/MyModal";
 import MyButton from "./Components/UI/button/MyButton";
 import {usePosts} from "./hooks/usePosts";
+import axios from "axios";
 
 function App() {
     const [posts, setPosts] = useState([
@@ -17,10 +18,14 @@ function App() {
         {id: 6, title: "teqqxt title", body: "qwert texts"},
         {id: 7, title: "tertttxt title", body: "madvawgaore texts"}
     ]);
-    const [filter,setFilter]=useState({sort:'',query:''})
-    const [modal,setModal]=useState(false)
-    const sortedAndSearchedPosts=usePosts(posts,filter.sort,filter.query)
+    const [filter, setFilter] = useState({sort: '', query: ''})
+    const [modal, setModal] = useState(false)
+    const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
+    async function fetchPosts() {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+        setPosts(response.data);
+    }
 
 
     const createPost = (newPost) => {
@@ -34,13 +39,14 @@ function App() {
 
     return (
         <div className="App">
-            <MyButton style={{marginTop:20}} onClick={()=>setModal(true)}>
+            <MyButton onClick={fetchPosts}>Fetch</MyButton>
+            <MyButton style={{marginTop: 20}} onClick={() => setModal(true)}>
                 New post
             </MyButton>
             <MyModal visible={modal} setVisible={setModal}>
                 <PostForm create={createPost}/>
             </MyModal>
-            <hr style={{marginTop:15,marginBottom:15}}/>
+            <hr style={{marginTop: 15, marginBottom: 15}}/>
             <PostFilter
                 filter={filter}
                 setFilter={setFilter}
