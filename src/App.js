@@ -8,6 +8,7 @@ import MyButton from "./Components/UI/button/MyButton";
 import {usePosts} from "./hooks/usePosts";
 import axios from "axios";
 import PostService from "./API/PostService";
+import Loader from "./Components/UI/Loader/Loader";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -51,8 +52,8 @@ function App() {
                 filter={filter}
                 setFilter={setFilter}
             />
-            {isPostsLoading ?
-                <h1>Please wait...</h1>
+            {isPostsLoading
+                ? <div style={{display:'flex',justifyContent:'center',marginTop:50}}><Loader/></div>
                 : <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"List 1"}/>
             }
         </div>
