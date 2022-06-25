@@ -2,9 +2,9 @@ import React, {useMemo, useState} from "react";
 import './Styles/App.css'
 import PostList from "./Components/PostList";
 import PostForm from "./Components/PostForm";
-import MySelect from "./Components/UI/select/MySelect";
-import MyInput from "./Components/UI/input/MyInput";
 import PostFilter from "./Components/PostFilter";
+import MyModal from "./Components/UI/MyModal/MyModal";
+import MyButton from "./Components/UI/button/MyButton";
 
 function App() {
     const [posts, setPosts] = useState([
@@ -17,6 +17,8 @@ function App() {
         {id: 7, title: "tertttxt title", body: "madvawgaore texts"}
     ]);
     const [filter,setFilter]=useState({sort:'',query:''})
+    const [modal,setModal]=useState(false)
+
     const sortedPost=useMemo(()=>{
         console.log('!!!!')
         if(filter.sort)
@@ -32,6 +34,7 @@ function App() {
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
+        setModal(false)
     }
 
     const removePost = (post) => {
@@ -40,19 +43,18 @@ function App() {
 
     return (
         <div className="App">
-            <PostForm create={createPost}/>
+            <MyButton style={{marginTop:20}} onClick={()=>setModal(true)}>
+                New post
+            </MyButton>
+            <MyModal visible={modal} setVisible={setModal}>
+                <PostForm create={createPost}/>
+            </MyModal>
             <hr style={{marginTop:15,marginBottom:15}}/>
             <PostFilter
                 filter={filter}
                 setFilter={setFilter}
             />
-            {sortedAndSearchedPosts.length !== 0
-                ?
-                <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"List 1"}/>
-                :
-                <h1 style={{textAlign: "center"}}>Posts doesn't exist</h1>
-            }
-
+            <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"List 1"}/>
         </div>
     );
 }

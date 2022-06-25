@@ -1,15 +1,18 @@
 import React from 'react';
 import PostItem from "./PostItem";
 
-const PostList = ({posts,title,remove}) => {
-    return (
-        <div>
-            <h1 style={{textAlign: 'center'}}>{title}</h1>
-            {posts.map((post,index) =>
-                <PostItem remove={remove} number={index+1} key={post.id} post={post}/>
-            )}
-        </div>
-    );
+const PostList = ({posts, title, remove}) => {
+    if (!posts.length > 0)
+        return <h1 style={{textAlign: "center"}}>Posts doesn't exist</h1>
+    else
+        return (
+            <div>
+                <h1 style={{textAlign: 'center'}}>{title}</h1>
+                {posts.map((post, index) =>
+                    <PostItem remove={remove} number={index + 1} key={post.id} post={post}/>
+                )}
+            </div>
+        );
 };
 
 export default PostList;
