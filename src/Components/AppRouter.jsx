@@ -5,15 +5,24 @@ import Posts from "../pages/Posts";
 import Home from "../pages/Home";
 import Error from "../pages/Error";
 import PostIdPage from "../pages/PostIdPage";
-import {routes} from "./router";
+import {publicRoutes,privateRoutes} from "./router";
 
 const AppRouter = () => {
+    const isAuth=true;
+
     return (
+        isAuth ?
         <Routes>
-            {routes.map(route=>
+            {privateRoutes.map(route=>
                 <Route path={route.path} element={route.element}/>
             )}
         </Routes>
+            :
+            <Routes>
+                {publicRoutes.map(route=>
+                    <Route path={route.path} element={route.element}/>
+                )}
+            </Routes>
     );
 };
 
