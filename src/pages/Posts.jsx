@@ -49,7 +49,7 @@ function Posts() {
 
 
     return (
-        <div className="App">
+        <div className='Posts'>
             <MyButton onClick={fetchPosts}>Fetch</MyButton>
             <MyButton style={{marginTop: 20}} onClick={() => setModal(true)}>
                 New post
