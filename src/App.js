@@ -6,31 +6,41 @@ import Posts from "./pages/Posts";
 
 
 function App() {
-    return(
+    function Home() {
+        return <h2>Home</h2>;
+    }
 
+    return (
         <Router>
+            {/*Block of navigation*/}
             <div>
                 <nav>
                     <ul>
                         <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
                             <Link to="/about">About</Link>
                         </li>
                         <li>
-                            <Link to="/posts">Posts</Link>
+                            <Link to="/users">Users</Link>
                         </li>
                     </ul>
                 </nav>
 
-                {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+                {/*Block of displaying page*/}
                 <Routes>
-                    <Route path="/about">
-                        <About />
+                    <Route path="/about" element={<About/>}>
+
                     </Route>
-                    <Route path="/posts">
-                        <Posts />
+                    <Route path="/users" element={<Posts/>}>
+
+                    </Route>
+                    <Route path="/" element={<Home/>}>
+
                     </Route>
                 </Routes>
+
             </div>
         </Router>
 
