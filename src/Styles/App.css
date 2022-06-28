@@ -10,6 +10,7 @@
 }
 
 .display {
+    margin:10px 0;
     width: 800px;
 }
 
@@ -20,6 +21,9 @@
     margin-top: 15px;
     justify-content: space-between;
     align-items: center;
+}
+.post__btns{
+    display: flex;
 }
 
 .post-enter {

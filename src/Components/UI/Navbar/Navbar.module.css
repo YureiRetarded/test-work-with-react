@@ -1,3 +1,6 @@
+.navbar{
+    margin-bottom: 20px;
+}
 .navbar>ul{
     list-style-type: none;
 
@@ -5,7 +8,11 @@
     justify-content: space-between;
 }
 .navbar>ul>li>a{
-    color: black;
     text-decoration: none;
     font-size: 25px;
+    padding: 5px 15px;
+    color: teal;
+    background: transparent;
+    border: 1px solid teal;
+    cursor: pointer;
 }
