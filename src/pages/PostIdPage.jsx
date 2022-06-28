@@ -32,10 +32,11 @@ const PostIdPage = () => {
             ?<Loader/>
             :<div>
                     {comments.map(c=>
-                        <div style={{border:"solid 1px teal",padding:10,marginTop:10}}>
+                        <div key={c.id} style={{border:"solid 1px teal",padding:10,marginTop:10}} >
                             <p>{c.name}</p>
                             <p>{c.email}</p>
                             <p>{c.body}</p>
+
                         </div>
                     )}
             </div>
